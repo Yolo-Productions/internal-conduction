@@ -131,7 +131,7 @@ public class DataHandler {
     }
 
     public Statistic getStatistic(StatisticTag tag) {
-        return getStatistic(tag, StatisticType.FULL);
+        return getStatistic(tag, StatisticType.FULLY);
     }
 
     public Statistic getStatistic(StatisticTag tag, StatisticType type) {
@@ -145,7 +145,7 @@ public class DataHandler {
             case MONTLY: {
                 return montlyStatistics.get(tag);
             }
-            case FULL: {
+            case FULLY: {
                 return fullyStatistics.get(tag);
             }
         }
@@ -169,7 +169,7 @@ public class DataHandler {
                     montlyStatistics.values().forEach(statistic -> statistic.setValue(0));
                     break;
                 }
-                case FULL: {
+                case FULLY: {
                     fullyStatistics.values().forEach(statistic -> statistic.setValue(0));
                     break;
                 }

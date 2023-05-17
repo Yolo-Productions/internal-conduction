@@ -31,7 +31,7 @@ public enum StatisticType implements StatisticBoard {
         }
     },
 
-    FULL("fullyStatistics") {
+    FULLY("fullyStatistics") {
 
         @Override
         public Map<StatisticTag, Statistic> getStatisticMap(DataHandler dataHandler) {

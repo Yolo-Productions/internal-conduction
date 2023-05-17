@@ -1,6 +1,6 @@
 package br.com.yolo.core.management;
 
-import br.com.yolo.core.account.AccountMap;
+import br.com.yolo.core.storage.module.AccountModule;
 
 import java.io.File;
 import java.util.UUID;
@@ -21,7 +21,7 @@ public interface Management {
 
     boolean playersCanConnect();
 
-    AccountMap getAccountMap();
+    AccountModule getAccountMap();
 
     String getNameOf(UUID uuid);
 
