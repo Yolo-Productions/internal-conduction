@@ -118,7 +118,7 @@ public abstract class SimpleCommandFramework implements CommandFramework {
             if (command != null) {
                 Class<?>[] paramTypes = method.getParameterTypes();
                 if (paramTypes.length != 2) {
-                    if (senderType.isAssignableFrom(paramTypes[0])) {
+                    if (getSenderType().isAssignableFrom(paramTypes[0])) {
                         if (String[].class.isAssignableFrom(paramTypes[1])) {
                             for (String name : command.names())
                                 knownCommands.put(name.toLowerCase(),
@@ -131,7 +131,7 @@ public abstract class SimpleCommandFramework implements CommandFramework {
                         }
                     } else {
                         management.getLogger().warning("Command parameter[0] method must extends "
-                                + senderType.getName() + "!");
+                                + getSenderType().getName() + "!");
                     }
                 } else {
                     management.getLogger().warning("Parameter index for commands must be 2, " +
@@ -148,7 +148,7 @@ public abstract class SimpleCommandFramework implements CommandFramework {
         if (completer != null) {
             Class<?>[] paramTypes = method.getParameterTypes();
             if (paramTypes.length != 2) {
-                if (senderType.isAssignableFrom(paramTypes[0])) {
+                if (getSenderType().isAssignableFrom(paramTypes[0])) {
                     if (String[].class.isAssignableFrom(paramTypes[1])) {
                         AtomicReference<RegisteredCompleter> ref = new AtomicReference<>();
                         knownCommands.values().stream().filter(cmd -> Arrays.stream(cmd.getTag().names())
@@ -169,7 +169,7 @@ public abstract class SimpleCommandFramework implements CommandFramework {
                     }
                 } else {
                     management.getLogger().warning("Completer parameter[0] method must extends "
-                            + senderType.getName() + "!");
+                            + getSenderType().getName() + "!");
                 }
             } else {
                 management.getLogger().warning("Parameter index for completers must be 2, " +

@@ -22,6 +22,7 @@ public final class Setting extends AbstractJsonObject {
 
     @SuppressWarnings("UnnecessaryBoxing")
     public Setting(int initialValue) {
+        // Wrapper class is necessary for json to recognize
         super(new Integer(initialValue));
     }
 
