@@ -1,4 +1,4 @@
-package br.com.yolo.core.player.account.statistic;
+package br.com.yolo.core.account.statistic;
 
 public enum StatisticTag {
 

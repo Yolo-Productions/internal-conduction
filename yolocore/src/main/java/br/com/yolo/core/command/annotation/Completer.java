@@ -1,4 +1,4 @@
-package br.com.yolo.core.command;
+package br.com.yolo.core.command.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

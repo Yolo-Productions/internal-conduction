@@ -1,6 +1,6 @@
 package br.com.yolo.core.plugin;
 
-import br.com.yolo.core.command.Command;
+import br.com.yolo.core.command.annotation.Command;
 import br.com.yolo.core.command.CommandListener;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

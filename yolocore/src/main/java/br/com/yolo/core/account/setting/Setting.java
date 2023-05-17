@@ -1,4 +1,4 @@
-package br.com.yolo.core.player.account.setting;
+package br.com.yolo.core.account.setting;
 
 import br.com.yolo.core.utilitaries.json.AbstractJsonObject;
 

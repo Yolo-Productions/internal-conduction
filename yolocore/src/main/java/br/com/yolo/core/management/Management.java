@@ -1,7 +1,6 @@
 package br.com.yolo.core.management;
 
-import br.com.yolo.core.player.account.Account;
-import br.com.yolo.core.player.account.AccountMap;
+import br.com.yolo.core.account.AccountMap;
 
 import java.io.File;
 import java.util.UUID;

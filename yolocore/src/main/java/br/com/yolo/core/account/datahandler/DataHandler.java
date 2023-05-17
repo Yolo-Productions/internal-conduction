@@ -1,10 +1,10 @@
-package br.com.yolo.core.player.account.datahandler;
+package br.com.yolo.core.account.datahandler;
 
-import br.com.yolo.core.player.account.setting.Setting;
-import br.com.yolo.core.player.account.setting.SettingTag;
-import br.com.yolo.core.player.account.statistic.Statistic;
-import br.com.yolo.core.player.account.statistic.StatisticTag;
-import br.com.yolo.core.player.account.statistic.StatisticType;
+import br.com.yolo.core.account.setting.Setting;
+import br.com.yolo.core.account.setting.SettingTag;
+import br.com.yolo.core.account.statistic.Statistic;
+import br.com.yolo.core.account.statistic.StatisticTag;
+import br.com.yolo.core.account.statistic.StatisticType;
 import lombok.Getter;
 
 import java.util.LinkedHashMap;

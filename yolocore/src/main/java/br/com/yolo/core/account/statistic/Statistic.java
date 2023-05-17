@@ -1,4 +1,4 @@
-package br.com.yolo.core.player.account.statistic;
+package br.com.yolo.core.account.statistic;
 
 import br.com.yolo.core.utilitaries.json.AbstractJsonObject;
 import lombok.Getter;

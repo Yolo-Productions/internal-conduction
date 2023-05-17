@@ -1,9 +1,9 @@
 package br.com.yolo.plugin.command;
 
-import br.com.yolo.core.command.Command;
+import br.com.yolo.core.command.annotation.Command;
 import br.com.yolo.core.command.CommandFramework;
 import br.com.yolo.core.command.CommandListener;
-import br.com.yolo.core.command.Completer;
+import br.com.yolo.core.command.annotation.Completer;
 import br.com.yolo.core.management.Management;
 import br.com.yolo.core.plugin.RegisteredCommand;
 import br.com.yolo.core.plugin.RegisteredCompleter;
