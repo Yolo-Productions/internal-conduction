@@ -7,5 +7,5 @@
 <p>Contributors:</p>
 <ul>
    <li>JsonElement - <a href="https://www.github.com/jsonelement">GitHub</a></li>
-   <li>Eurodata - <a href="https://www.github.com/vanilladevelopment">GitHub</a></li>
+   <li>Vanilla. - <a href="https://www.github.com/vanilladevelopment">GitHub</a></li>
 </ul>
