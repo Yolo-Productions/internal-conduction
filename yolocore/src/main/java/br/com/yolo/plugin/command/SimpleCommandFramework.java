@@ -11,22 +11,23 @@ import br.com.yolo.core.resolver.ClassGetter;
 import br.com.yolo.core.resolver.method.MethodResolver;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class SimpleCommandFramework implements CommandFramework {
 
-    protected final Management plugin;
+    protected final Management management;
     protected final Class<?> senderType;
 
     private Class<?> playerClass;
 
     protected Map<String, RegisteredCommand> knownCommands = new HashMap<>();
-    protected Map<String, RegisteredCompleter> knownCompleters = new HashMap<>();
 
-    public SimpleCommandFramework(Management plugin, Class<?> senderType) {
-        this.plugin = plugin;
+    public SimpleCommandFramework(Management management, Class<?> senderType) {
+        this.management = management;
         this.senderType = senderType;
         // Player
         if ((this.playerClass = ClassGetter.forNameOrNull("org.bukkit.craftbukkit.v1_8_R3" +
@@ -38,26 +39,18 @@ public abstract class SimpleCommandFramework implements CommandFramework {
     }
 
     @Override
-    public void execute(Object sender, String label, String[] args) {
+    public void dispatchCommand(Object sender, String label, String[] args) {
         RegisteredCommand command = knownCommands.get(label.toLowerCase());
         if (command != null) {
             Command tag = command.getTag();
             if (tag.playerOnly() && playerClass.isAssignableFrom(sender.getClass())) {
                 if (tag.permission().isEmpty() || hasPermission(sender, tag.permission())) {
                     if (tag.async()) {
-                        plugin.runTaskAsync(() -> {
-                            try {
-                                command.getMethod().invoke(sender, args);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                        management.runTaskAsync(() -> {
+                            command.execute(sender, args);
                         });
                     } else {
-                        try {
-                            command.getMethod().invoke(sender, args);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        command.execute(sender, args);
                     }
                 } else {
                     if (tag.permissionMessage().isEmpty())
@@ -69,6 +62,18 @@ public abstract class SimpleCommandFramework implements CommandFramework {
                 sendMessage(sender, "§cComando disponível apenas in-game!");
             }
         }
+    }
+
+    @Override
+    public List<String> tabComplete(Object sender, String label, String[] args) {
+        RegisteredCommand command = knownCommands.get(label.toLowerCase());
+        if (command != null) {
+            Command tag = command.getTag();
+            if (!tag.permission().isEmpty() && !hasPermission(sender, tag.permission()))
+                return null;
+            return command.getCompleter().complete(sender, args);
+        }
+        return null;
     }
 
     private void sendMessage(Object sender, String message) {
@@ -91,19 +96,14 @@ public abstract class SimpleCommandFramework implements CommandFramework {
     }
 
     @Override
-    public List<String> tabComplete(Object sender, String label, String[] args) {
-        return null;
-    }
-
-    @Override
     public void registerAll(String pakage) {
-        for (Class<?> clazz : ClassGetter.getClassesForPackageByFile(plugin.getFile(),
+        for (Class<?> clazz : ClassGetter.getClassesForPackageByFile(management.getFile(),
                 pakage)) {
             if (CommandListener.class.isAssignableFrom(clazz)) {
                 try {
                     registerAll((CommandListener) clazz.getConstructor().newInstance());
                 } catch (Exception e) {
-                    plugin.getLogger().warning("Could instantiate command listener class '"
+                    management.getLogger().warning("Couldn't instantiate command listener class '"
                             + clazz.getSimpleName() + "': " + e);
                 }
             }
@@ -124,50 +124,58 @@ public abstract class SimpleCommandFramework implements CommandFramework {
                                 knownCommands.put(name.toLowerCase(),
                                         new RegisteredCommand(listener, method, command));
                             String realName = command.names()[0];
-                            plugin.getLogger().info("Command '" + realName + "' registered!");
+                            management.getLogger().info("Command '" + realName + "' registered!");
                         } else {
-                            plugin.getLogger().warning("Command parameter[1] method must be" +
+                            management.getLogger().warning("Command parameter[1] method must be" +
                                     " an String[].class array!");
                         }
                     } else {
-                        plugin.getLogger().warning("Command parameter[0] method must extends "
+                        management.getLogger().warning("Command parameter[0] method must extends "
                                 + senderType.getName() + "!");
                     }
                 } else {
-                    plugin.getLogger().warning("Parameter index for commands must be 2, " +
+                    management.getLogger().warning("Parameter index for commands must be 2, " +
                             "but was " + paramTypes.length + "!");
                 }
             }
-            Completer completer = method.getAnnotation(Completer.class);
-            if (completer != null) {
-                Class<?>[] paramTypes = method.getParameterTypes();
-                if (paramTypes.length != 2) {
-                    if (senderType.isAssignableFrom(paramTypes[0])) {
-                        if (String[].class.isAssignableFrom(paramTypes[1])) {
-                            for (String name : completer.names())
-                                knownCompleters.put(name.toLowerCase(),
-                                        new RegisteredCompleter(listener, method));
-                            String realName = completer.names()[0];
-                            plugin.getLogger().info("Completer '" + realName + "' registered!");
-                        } else {
-                            plugin.getLogger().warning("Completer parameter[1] method must be" +
-                                    " an String[].class array!");
-                        }
-                    } else {
-                        plugin.getLogger().warning("Completer parameter[0] method must extends "
-                                + senderType.getName() + "!");
-                    }
-                } else {
-                    plugin.getLogger().warning("Parameter index for completers must be 2, " +
-                            "but was " + paramTypes.length + "!");
-                }
-            }
+            registerCompleter(listener, method);
         }
     }
 
     @Override
-    public synchronized void clearCommands() {
-        knownCommands.clear();
+    public void registerCompleter(CommandListener listener, Method method) {
+        Completer completer = method.getAnnotation(Completer.class);
+        if (completer != null) {
+            Class<?>[] paramTypes = method.getParameterTypes();
+            if (paramTypes.length != 2) {
+                if (senderType.isAssignableFrom(paramTypes[0])) {
+                    if (String[].class.isAssignableFrom(paramTypes[1])) {
+                        AtomicReference<RegisteredCompleter> ref = new AtomicReference<>();
+                        knownCommands.values().stream().filter(cmd -> Arrays.stream(cmd.getTag().names())
+                                .map(String::toLowerCase)
+                                        .anyMatch(completer.names()[0].toLowerCase()::equals))
+                                        .forEach(cmd -> {
+                                            if (ref.get() == null)
+                                                ref.set(new RegisteredCompleter(listener, method,
+                                                        completer));
+                                            cmd.setCompleter(ref.get());
+                                        });
+                        if (ref.get() != null) {
+                            management.getLogger().info("Completer '" + completer.names()[0] + "' registered!");
+                        }
+                    } else {
+                        management.getLogger().warning("Completer parameter[1] method must be" +
+                                " an String[].class array!");
+                    }
+                } else {
+                    management.getLogger().warning("Completer parameter[0] method must extends "
+                            + senderType.getName() + "!");
+                }
+            } else {
+                management.getLogger().warning("Parameter index for completers must be 2, " +
+                        "but was " + paramTypes.length + "!");
+            }
+        }
     }
 
     @Override
