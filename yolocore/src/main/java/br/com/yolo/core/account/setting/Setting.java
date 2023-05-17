@@ -22,7 +22,7 @@ public final class Setting extends AbstractJsonObject {
 
     @SuppressWarnings("UnnecessaryBoxing")
     public Setting(int initialValue) {
-        // Wrapper class is necessary for json to recognize
+        // É necessário valores wrappers para identificação do gson
         super(new Integer(initialValue));
     }
 
