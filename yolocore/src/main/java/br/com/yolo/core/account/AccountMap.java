@@ -1,4 +1,4 @@
-package br.com.yolo.core.player.account;
+package br.com.yolo.core.account;
 
 import br.com.yolo.core.resolver.method.MethodResolver;
 import lombok.Getter;
