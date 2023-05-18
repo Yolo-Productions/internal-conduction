@@ -11,7 +11,7 @@ public final class Statistic extends AbstractJsonObject {
     @SuppressWarnings("UnnecessaryBoxing")
     public Statistic(int initialValue) {
         // É necessário valores wrappers para identificação do gson
-        super(new Integer(initialValue));
+        super(Integer.valueOf(initialValue));
     }
 
     @Override

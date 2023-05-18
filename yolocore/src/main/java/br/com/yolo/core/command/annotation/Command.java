@@ -12,11 +12,9 @@ public @interface Command {
     String[] names();
 
     String permission() default "";
-
     String permissionMessage() default "";
 
     String description() default "No descriptions provided for this command.";
-
     String usage() default "/<command>";
 
     boolean async() default false;
