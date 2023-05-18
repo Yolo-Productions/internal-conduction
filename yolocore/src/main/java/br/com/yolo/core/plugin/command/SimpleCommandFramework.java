@@ -1,4 +1,4 @@
-package br.com.yolo.plugin.command;
+package br.com.yolo.core.plugin.command;
 
 import br.com.yolo.core.command.annotation.Command;
 import br.com.yolo.core.command.CommandFramework;
