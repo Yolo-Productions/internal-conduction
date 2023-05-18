@@ -1,4 +1,4 @@
-package br.com.yolo.core.utilitaries.callback;
+package br.com.yolo.core.util.callback;
 
 public interface Callback {
 

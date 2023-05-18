@@ -1,4 +1,4 @@
-package br.com.yolo.core.resolver;
+package br.com.yolo.core.util.resolver;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

@@ -1,7 +1,7 @@
 package br.com.yolo.spigot.command.impl;
 
 import br.com.yolo.core.command.annotation.Command;
-import br.com.yolo.core.resolver.field.FieldResolver;
+import br.com.yolo.core.util.resolver.field.FieldResolver;
 import br.com.yolo.core.command.engine.SimpleCommandFramework;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;

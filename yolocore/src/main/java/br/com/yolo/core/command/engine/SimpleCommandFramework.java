@@ -5,9 +5,8 @@ import br.com.yolo.core.command.CommandFramework;
 import br.com.yolo.core.command.CommandListener;
 import br.com.yolo.core.command.annotation.Command;
 import br.com.yolo.core.command.annotation.Completer;
-import br.com.yolo.core.management.Management;
-import br.com.yolo.core.resolver.ClassGetter;
-import br.com.yolo.core.resolver.method.MethodResolver;
+import br.com.yolo.core.util.resolver.ClassGetter;
+import br.com.yolo.core.util.resolver.method.MethodResolver;
 import org.bukkit.plugin.Plugin;
 
 import java.lang.reflect.Method;

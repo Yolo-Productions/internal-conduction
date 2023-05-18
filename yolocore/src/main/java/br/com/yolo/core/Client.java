@@ -2,7 +2,6 @@ package br.com.yolo.core;
 
 import br.com.yolo.core.backend.database.mysql.MySQLConnection;
 import br.com.yolo.core.backend.database.redis.RedisConnection;
-import br.com.yolo.core.management.Management;
 import br.com.yolo.core.server.type.ServerType;
 import br.com.yolo.core.storage.json.JsonModule;
 import br.com.yolo.core.storage.module.AccountModule;

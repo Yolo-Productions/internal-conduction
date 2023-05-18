@@ -1,6 +1,6 @@
-package br.com.yolo.core.resolver.field;
+package br.com.yolo.core.util.resolver.field;
 
-import br.com.yolo.core.resolver.Resolver;
+import br.com.yolo.core.util.resolver.Resolver;
 import lombok.RequiredArgsConstructor;
 
 import java.lang.reflect.Field;

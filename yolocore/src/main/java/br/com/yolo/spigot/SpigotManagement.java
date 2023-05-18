@@ -1,6 +1,6 @@
 package br.com.yolo.spigot;
 
-import br.com.yolo.core.management.Management;
+import br.com.yolo.core.Management;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

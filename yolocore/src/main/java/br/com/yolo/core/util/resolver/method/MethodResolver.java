@@ -1,6 +1,6 @@
-package br.com.yolo.core.resolver.method;
+package br.com.yolo.core.util.resolver.method;
 
-import br.com.yolo.core.resolver.Resolver;
+import br.com.yolo.core.util.resolver.Resolver;
 
 import java.lang.reflect.Method;
 

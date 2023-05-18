@@ -1,4 +1,4 @@
-package br.com.yolo.core.utilitaries.chatcolor;
+package br.com.yolo.core.util.chatcolor;
 
 import java.util.HashMap;
 import java.util.Map;

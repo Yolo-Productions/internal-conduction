@@ -2,7 +2,7 @@ package br.com.yolo.core.backend.database.redis;
 
 import br.com.yolo.core.backend.Backend;
 import br.com.yolo.core.backend.Credentials;
-import br.com.yolo.core.utilitaries.callback.Callback;
+import br.com.yolo.core.util.callback.Callback;
 import lombok.Getter;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;

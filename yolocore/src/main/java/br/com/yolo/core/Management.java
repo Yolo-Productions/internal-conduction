@@ -1,4 +1,4 @@
-package br.com.yolo.core.management;
+package br.com.yolo.core;
 
 import net.md_5.bungee.api.chat.BaseComponent;
 
@@ -17,7 +17,7 @@ public interface Management {
     void sendMessage(UUID uniqueId, String message);
     void sendMessage(UUID uniqueId, String... message);
     void sendMessage(UUID uniqueId, BaseComponent message);
-    void sendMessage(UUID uniqueId, BaseComponent... message);
+    void sendMessage(UUID uniqueId, BaseComponent[] message);
 
     void runAsync(Runnable runnable);
     void runLater(Runnable runnable, long delay, TimeUnit format);

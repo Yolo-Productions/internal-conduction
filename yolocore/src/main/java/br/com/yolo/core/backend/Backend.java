@@ -1,6 +1,6 @@
 package br.com.yolo.core.backend;
 
-import br.com.yolo.core.utilitaries.callback.Callback;
+import br.com.yolo.core.util.callback.Callback;
 
 public interface Backend {
 

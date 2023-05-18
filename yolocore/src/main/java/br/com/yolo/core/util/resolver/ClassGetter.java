@@ -1,6 +1,6 @@
-package br.com.yolo.core.resolver;
+package br.com.yolo.core.util.resolver;
 
-import br.com.yolo.core.resolver.method.MethodResolver;
+import br.com.yolo.core.util.resolver.method.MethodResolver;
 import lombok.experimental.UtilityClass;
 
 import java.io.File;

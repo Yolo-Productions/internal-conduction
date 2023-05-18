@@ -1,4 +1,4 @@
-package br.com.yolo.core.utilitaries.json;
+package br.com.yolo.core.util.json;
 
 import com.google.gson.internal.LazilyParsedNumber;
 

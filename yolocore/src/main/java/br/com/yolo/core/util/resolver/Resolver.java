@@ -1,4 +1,4 @@
-package br.com.yolo.core.resolver;
+package br.com.yolo.core.util.resolver;
 
 public abstract class Resolver<T> {
 

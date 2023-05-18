@@ -1,6 +1,6 @@
 package br.com.yolo.core.account.statistic;
 
-import br.com.yolo.core.utilitaries.json.AbstractJsonObject;
+import br.com.yolo.core.util.json.AbstractJsonObject;
 import lombok.Getter;
 import lombok.Setter;
 
