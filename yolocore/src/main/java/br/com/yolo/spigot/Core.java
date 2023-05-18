@@ -6,11 +6,15 @@ import br.com.yolo.core.account.datahandler.DataHandler;
 import br.com.yolo.core.account.setting.SettingTag;
 import br.com.yolo.core.management.Management;
 import br.com.yolo.core.storage.module.AccountModule;
+import br.com.yolo.spigot.adapter.LocationAdapter;
 import br.com.yolo.spigot.command.BukkitCommandFramework;
+import com.google.gson.GsonBuilder;
 import lombok.Getter;
+import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.lang.reflect.Modifier;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -20,6 +24,13 @@ public abstract class Core extends JavaPlugin implements Management {
     private static boolean allowingPlayers = false;
 
     private BukkitCommandFramework commandFramework;
+
+    public Core() {
+        Client.getJsonModule().registerGson("main", new GsonBuilder()
+                .registerTypeAdapter(Location.class, new LocationAdapter())
+                // register adapters
+                .excludeFieldsWithModifiers(Modifier.TRANSIENT, Modifier.STATIC));
+    }
 
     @Override
     public void onLoad() {
