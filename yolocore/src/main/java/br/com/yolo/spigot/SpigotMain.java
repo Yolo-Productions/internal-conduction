@@ -2,6 +2,7 @@ package br.com.yolo.spigot;
 
 import br.com.yolo.core.Client;
 import br.com.yolo.spigot.api.inventory.Inventory;
+import br.com.yolo.spigot.command.impl.SpigotCommandFramework;
 import br.com.yolo.spigot.listener.Listener;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,6 +34,7 @@ public abstract class SpigotMain extends JavaPlugin {
             inventoriesInAction = new LinkedHashMap<>();
 
             new Listener(this, "br.com.yolo.spigot").sendPacket();
+            new SpigotCommandFramework(this).registerAll("br.com.yolo.spigot.command.list");
         } catch (Exception ex) {
             ex.printStackTrace();
             getServer().shutdown();
