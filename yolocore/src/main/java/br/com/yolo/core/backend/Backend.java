@@ -10,5 +10,5 @@ public interface Backend {
 
     boolean isConnected();
 
-    void ping() throws Throwable;
+    long ping() throws Throwable;
 }
