@@ -41,27 +41,25 @@ public abstract class SimpleCommandFramework implements CommandFramework {
         RegisteredCommand command = knownCommands.get(label.toLowerCase());
         if (command != null) {
             Command tag = command.getTag();
-            // Checa se este comando é apenas para Players (void cmd(Player sender, String[] args))
-            if (command.getMethod().getParameterTypes()[0].isAssignableFrom(playerClass) &&
-                    // Checa se este sender é um Player
-                    playerClass.isAssignableFrom(sender.getClass())) {
-                if (tag.permission().isEmpty() || hasPermission(sender, tag.permission())) {
-                    if (tag.async()) {
-                        management.runTaskAsync(() -> {
-                            command.execute(sender, args);
-                        });
-                    } else {
-                        command.execute(sender, args);
-                    }
-                } else {
-                    if (tag.permissionMessage().isEmpty())
-                        sendMessage(sender, "§cVocê não possui permissão para executar este comando.");
-                    else
-                        sendMessage(sender, tag.permissionMessage());
-                }
-            } else {
-                sendMessage(sender, "§cComando disponível apenas in-game!");
-            }
+           if (command.getMethod().getParameterTypes()[0].isAssignableFrom(playerClass)
+                   && playerClass.isAssignableFrom(sender.getClass())) {
+               sendMessage(sender, "§cComando disponível apenas in-game!");
+           } else {
+               if (tag.permission().isEmpty() || hasPermission(sender, tag.permission())) {
+                   if (tag.async()) {
+                       management.runTaskAsync(() -> {
+                           command.execute(sender, args);
+                       });
+                   } else {
+                       command.execute(sender, args);
+                   }
+               } else {
+                   if (tag.permissionMessage().isEmpty())
+                       sendMessage(sender, "§cVocê não possui permissão para executar este comando.");
+                   else
+                       sendMessage(sender, tag.permissionMessage());
+               }
+           }
         }
     }
 
