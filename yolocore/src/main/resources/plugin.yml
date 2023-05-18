@@ -1,0 +1,7 @@
+name: Core
+main: br.com.yolomc.spigot.SpigotMain
+version: 1.0.0
+load: STARTUP
+authors:
+  - JsonElement
+  - Vanilla
