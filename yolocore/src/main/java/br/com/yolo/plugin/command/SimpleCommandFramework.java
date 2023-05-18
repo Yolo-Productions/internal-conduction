@@ -1,12 +1,12 @@
 package br.com.yolo.plugin.command;
 
-import br.com.yolo.core.command.annotation.Command;
 import br.com.yolo.core.command.CommandFramework;
 import br.com.yolo.core.command.CommandListener;
+import br.com.yolo.core.command.annotation.Command;
 import br.com.yolo.core.command.annotation.Completer;
+import br.com.yolo.core.command.plugin.RegisteredCommand;
+import br.com.yolo.core.command.plugin.RegisteredCompleter;
 import br.com.yolo.core.management.Management;
-import br.com.yolo.core.plugin.RegisteredCommand;
-import br.com.yolo.core.plugin.RegisteredCompleter;
 import br.com.yolo.core.resolver.ClassGetter;
 import br.com.yolo.core.resolver.method.MethodResolver;
 
@@ -43,7 +43,10 @@ public abstract class SimpleCommandFramework implements CommandFramework {
         RegisteredCommand command = knownCommands.get(label.toLowerCase());
         if (command != null) {
             Command tag = command.getTag();
-            if (tag.playerOnly() && playerClass.isAssignableFrom(sender.getClass())) {
+            // Checa se este comando é apenas para Players (void cmd(Player sender, String[] args))
+            if (command.getMethod().getParameterTypes()[0].isAssignableFrom(playerClass) &&
+                    // Checa se este sender é um Player
+                    playerClass.isAssignableFrom(sender.getClass())) {
                 if (tag.permission().isEmpty() || hasPermission(sender, tag.permission())) {
                     if (tag.async()) {
                         management.runTaskAsync(() -> {
@@ -123,6 +126,7 @@ public abstract class SimpleCommandFramework implements CommandFramework {
                             for (String name : command.names())
                                 knownCommands.put(name.toLowerCase(),
                                         new RegisteredCommand(listener, method, command));
+                            registerServerCommand(command);
                             String realName = command.names()[0];
                             management.getLogger().info("Command '" + realName + "' registered!");
                         } else {
@@ -152,14 +156,14 @@ public abstract class SimpleCommandFramework implements CommandFramework {
                     if (String[].class.isAssignableFrom(paramTypes[1])) {
                         AtomicReference<RegisteredCompleter> ref = new AtomicReference<>();
                         knownCommands.values().stream().filter(cmd -> Arrays.stream(cmd.getTag().names())
-                                .map(String::toLowerCase)
+                                        .map(String::toLowerCase)
                                         .anyMatch(completer.names()[0].toLowerCase()::equals))
-                                        .forEach(cmd -> {
-                                            if (ref.get() == null)
-                                                ref.set(new RegisteredCompleter(listener, method,
-                                                        completer));
-                                            cmd.setCompleter(ref.get());
-                                        });
+                                .forEach(cmd -> {
+                                    if (ref.get() == null)
+                                        ref.set(new RegisteredCompleter(listener, method,
+                                                completer));
+                                    cmd.setCompleter(ref.get());
+                                });
                         if (ref.get() != null) {
                             management.getLogger().info("Completer '" + completer.names()[0] + "' registered!");
                         }
