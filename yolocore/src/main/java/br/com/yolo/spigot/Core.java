@@ -26,9 +26,20 @@ public abstract class Core extends JavaPlugin implements Management {
     private BukkitCommandFramework commandFramework;
 
     public Core() {
+        /**
+         * "main" gson
+         */
         Client.getJsonModule().registerGson("main", new GsonBuilder()
                 .registerTypeAdapter(Location.class, new LocationAdapter())
                 // register adapters
+                .excludeFieldsWithModifiers(Modifier.TRANSIENT, Modifier.STATIC));
+        /**
+         * "pretty" gson
+         */
+        Client.getJsonModule().registerGson("pretty", new GsonBuilder()
+                .registerTypeAdapter(Location.class, new LocationAdapter())
+                // register adapters
+                        .setPrettyPrinting()
                 .excludeFieldsWithModifiers(Modifier.TRANSIENT, Modifier.STATIC));
     }
 
