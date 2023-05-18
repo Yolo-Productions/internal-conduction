@@ -19,9 +19,9 @@ public interface Management {
 
     boolean stop();
 
-    boolean playersCanConnect();
+    boolean isAllowingPlayers();
 
-    AccountModule getAccountMap();
+    AccountModule getAccountModule();
 
     String getNameOf(UUID uuid);
 
