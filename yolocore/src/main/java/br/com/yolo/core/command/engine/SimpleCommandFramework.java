@@ -42,7 +42,7 @@ public abstract class SimpleCommandFramework implements CommandFramework {
         if (command != null) {
             Command tag = command.getTag();
            if (command.getMethod().getParameterTypes()[0].isAssignableFrom(playerClass)
-                   && playerClass.isAssignableFrom(sender.getClass())) {
+                   && !playerClass.isAssignableFrom(sender.getClass())) {
                sendMessage(sender, "§cComando disponível apenas in-game!");
            } else {
                if (tag.permission().isEmpty() || hasPermission(sender, tag.permission())) {
