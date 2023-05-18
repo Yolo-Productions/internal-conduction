@@ -1,7 +1,7 @@
 package br.com.yolo.core.command;
 
 import br.com.yolo.core.command.annotation.Command;
-import br.com.yolo.core.command.plugin.RegisteredCommand;
+import br.com.yolo.core.command.engine.RegisteredCommand;
 
 import java.lang.reflect.Method;
 import java.util.List;

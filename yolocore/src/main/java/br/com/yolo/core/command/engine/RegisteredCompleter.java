@@ -1,4 +1,4 @@
-package br.com.yolo.core.command.plugin;
+package br.com.yolo.core.command.engine;
 
 import br.com.yolo.core.command.CommandException;
 import br.com.yolo.core.command.CommandListener;
