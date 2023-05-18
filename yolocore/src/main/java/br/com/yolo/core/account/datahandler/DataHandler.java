@@ -134,6 +134,10 @@ public class DataHandler {
         return getStatistic(tag, StatisticType.FULLY);
     }
 
+    public Setting getSetting(SettingTag tag) {
+        return settings.get(tag);
+    }
+
     public Statistic getStatistic(StatisticTag tag, StatisticType type) {
         switch (type) {
             case DAILY: {

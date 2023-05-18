@@ -1,12 +1,14 @@
 package br.com.yolo.core.command;
 
-import br.com.yolo.core.plugin.RegisteredCommand;
+import br.com.yolo.core.command.annotation.Command;
+import br.com.yolo.core.command.engine.RegisteredCommand;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 public interface CommandFramework {
 
-    void execute(Object sender, String label, String[] args);
+    void dispatchCommand(Object sender, String label, String[] args);
 
     List<String> tabComplete(Object sender, String label, String[] args);
 
@@ -14,7 +16,9 @@ public interface CommandFramework {
 
     void registerAll(CommandListener listener);
 
-    void clearCommands();
+    void registerCompleter(CommandListener listener, Method method);
+
+    void registerServerCommand(Command tag);
 
     RegisteredCommand getCommand(String name);
 

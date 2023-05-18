@@ -19,7 +19,5 @@ public @interface Command {
 
     String usage() default "/<command>";
 
-    boolean playerOnly() default false;
-
     boolean async() default false;
 }
