@@ -2,16 +2,20 @@ package br.com.yolo.core;
 
 import br.com.yolo.core.backend.database.mysql.MySQLConnection;
 import br.com.yolo.core.backend.database.redis.RedisConnection;
+import br.com.yolo.core.management.Management;
 import br.com.yolo.core.server.type.ServerType;
 import br.com.yolo.core.storage.json.JsonModule;
 import br.com.yolo.core.storage.module.AccountModule;
 
-import br.com.yolo.core.utilitaries.callback.Callback;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang.RandomStringUtils;
 
 public class Client {
+
+    @Getter
+    @Setter
+    private static Management management;
 
     @Getter
     @Setter
@@ -33,7 +37,7 @@ public class Client {
     @Getter
     private static final JsonModule jsonModule = new JsonModule();
 
-    public static void initialize() {
+    public static void initialize(Management newManagement) {
         MySQLConnection sql = new MySQLConnection("127.0.0.1", "yolo", "root", "", 3306);
         RedisConnection redis = new RedisConnection("127.0.0.1", 6379);
 
@@ -52,5 +56,6 @@ public class Client {
 
         setMySQLConnection(sql);
         setRedisConnection(redis);
+        setManagement(newManagement);
     }
 }

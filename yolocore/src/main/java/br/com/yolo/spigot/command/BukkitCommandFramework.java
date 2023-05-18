@@ -3,7 +3,6 @@ package br.com.yolo.spigot.command;
 import br.com.yolo.core.command.annotation.Command;
 import br.com.yolo.core.resolver.field.FieldResolver;
 import br.com.yolo.core.command.engine.SimpleCommandFramework;
-import br.com.yolo.spigot.Core;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.SimplePluginManager;
