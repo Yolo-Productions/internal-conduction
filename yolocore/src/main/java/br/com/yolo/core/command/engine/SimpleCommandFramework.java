@@ -1,5 +1,6 @@
 package br.com.yolo.core.command.engine;
 
+import br.com.yolo.core.Client;
 import br.com.yolo.core.command.CommandFramework;
 import br.com.yolo.core.command.CommandListener;
 import br.com.yolo.core.command.annotation.Command;
@@ -7,6 +8,7 @@ import br.com.yolo.core.command.annotation.Completer;
 import br.com.yolo.core.management.Management;
 import br.com.yolo.core.resolver.ClassGetter;
 import br.com.yolo.core.resolver.method.MethodResolver;
+import org.bukkit.plugin.Plugin;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -17,14 +19,14 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class SimpleCommandFramework implements CommandFramework {
 
-    protected final Management management;
+    protected final Plugin management;
     protected final Class<?> senderType;
 
     private Class<?> playerClass;
 
     protected Map<String, RegisteredCommand> knownCommands = new HashMap<>();
 
-    public SimpleCommandFramework(Management management, Class<?> senderType) {
+    public SimpleCommandFramework(Plugin management, Class<?> senderType) {
         this.management = management;
         this.senderType = senderType;
         // Player
@@ -47,7 +49,7 @@ public abstract class SimpleCommandFramework implements CommandFramework {
            } else {
                if (tag.permission().isEmpty() || hasPermission(sender, tag.permission())) {
                    if (tag.async()) {
-                       management.runTaskAsync(() -> {
+                       Client.getManagement().runAsync(() -> {
                            command.execute(sender, args);
                        });
                    } else {
@@ -96,7 +98,7 @@ public abstract class SimpleCommandFramework implements CommandFramework {
 
     @Override
     public void registerAll(String pakage) {
-        for (Class<?> clazz : ClassGetter.getClassesForPackageByFile(management.getFile(),
+        for (Class<?> clazz : ClassGetter.getClassesForPackageByFile(Client.getManagement().getFile(),
                 pakage)) {
             if (CommandListener.class.isAssignableFrom(clazz)) {
                 try {

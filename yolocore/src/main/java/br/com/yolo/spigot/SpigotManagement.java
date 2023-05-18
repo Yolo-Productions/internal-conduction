@@ -13,12 +13,12 @@ import java.util.logging.Logger;
 public class SpigotManagement implements Management {
     @Override
     public Logger getLogger() {
-        return SpigotMain.getPlugin().getLogger();
+        return SpigotMain.getInstance().getLogger();
     }
 
     @Override
     public File getFile() {
-        return SpigotMain.getPlugin().getDataFolder();
+        return SpigotMain.getInstance().getDataFolder();
     }
 
     @Override
@@ -38,6 +38,8 @@ public class SpigotManagement implements Management {
     @Override
     public void sendMessage(UUID uniqueId, String message) {
         Player player = getPlayer(uniqueId, Player.class);
+        if (player == null)
+            return;
 
         player.sendMessage(message);
     }
@@ -45,6 +47,8 @@ public class SpigotManagement implements Management {
     @Override
     public void sendMessage(UUID uniqueId, String... message) {
         Player player = getPlayer(uniqueId, Player.class);
+        if (player == null)
+            return;
 
         player.sendMessage(message);
     }
@@ -52,6 +56,8 @@ public class SpigotManagement implements Management {
     @Override
     public void sendMessage(UUID uniqueId, BaseComponent message) {
         Player player = getPlayer(uniqueId, Player.class);
+        if (player == null)
+            return;
 
         player.sendMessage(BaseComponent.toLegacyText(message));
     }
@@ -59,17 +65,19 @@ public class SpigotManagement implements Management {
     @Override
     public void sendMessage(UUID uniqueId, BaseComponent... message) {
         Player player = getPlayer(uniqueId, Player.class);
+        if (player == null)
+            return;
 
         player.sendMessage(BaseComponent.toLegacyText(message));
     }
 
     @Override
     public void runAsync(Runnable runnable) {
-        Bukkit.getScheduler().runTaskAsynchronously(SpigotMain.getPlugin(), runnable);
+        Bukkit.getScheduler().runTaskAsynchronously(SpigotMain.getInstance(), runnable);
     }
 
     @Override
     public void runLater(Runnable runnable, long delay, TimeUnit format) {
-        Bukkit.getScheduler().runTaskLater(SpigotMain.getPlugin(), runnable, format.convert(delay, format));
+        Bukkit.getScheduler().runTaskLater(SpigotMain.getInstance(), runnable, format.convert(delay, format));
     }
 }
