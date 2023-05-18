@@ -1,5 +1,6 @@
 package br.com.yolo.core;
 
+import br.com.yolo.core.backend.data.impl.ServerDataImpl;
 import br.com.yolo.core.backend.database.mysql.MySQLConnection;
 import br.com.yolo.core.backend.database.redis.RedisConnection;
 import br.com.yolo.core.server.type.ServerType;
@@ -32,6 +33,10 @@ public class Client {
     private static RedisConnection redisConnection;
 
     @Getter
+    @Setter
+    private static ServerDataImpl serverData;
+
+    @Getter
     private static final AccountModule accountModule = new AccountModule();
     @Getter
     private static final JsonModule jsonModule = new JsonModule();
@@ -56,5 +61,7 @@ public class Client {
         setMySQLConnection(sql);
         setRedisConnection(redis);
         setManagement(newManagement);
+
+        setServerData(new ServerDataImpl(redisConnection));
     }
 }
