@@ -1,6 +1,7 @@
 package br.com.yolo.core.command;
 
-import br.com.yolo.core.plugin.RegisteredCommand;
+import br.com.yolo.core.command.annotation.Command;
+import br.com.yolo.core.command.plugin.RegisteredCommand;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -16,6 +17,8 @@ public interface CommandFramework {
     void registerAll(CommandListener listener);
 
     void registerCompleter(CommandListener listener, Method method);
+
+    void registerServerCommand(Command tag);
 
     RegisteredCommand getCommand(String name);
 
