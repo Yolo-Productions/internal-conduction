@@ -6,13 +6,17 @@ import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @Getter
-public class SpigotMain extends JavaPlugin {
+public abstract class SpigotMain extends JavaPlugin {
+
     @Getter
-    private static SpigotMain plugin;
+    private static SpigotMain instance;
+
+    public SpigotMain() {
+        instance = this;
+    }
 
     @Override
     public void onLoad() {
-        plugin = this;
         saveDefaultConfig();
 
         Client.initialize(new SpigotManagement());

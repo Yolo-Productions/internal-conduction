@@ -10,7 +10,9 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="internal-conduction" target="1.8" />
       <module name="ms-yolo" target="1.8" />
+      <module name="yolocore" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
