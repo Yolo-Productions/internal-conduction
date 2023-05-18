@@ -14,7 +14,6 @@ import java.util.UUID;
 public abstract class SpigotMain extends JavaPlugin {
     @Getter
     private static SpigotMain instance;
-
     public SpigotMain() {
         instance = this;
     }
