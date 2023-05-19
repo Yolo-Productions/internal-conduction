@@ -112,16 +112,16 @@ public final class AccountDataImpl implements AccountData {
     }
 
     @Override
-    public void saveAccount(Account account, String jsonField, Object data) {
+    public void saveAccount(Account account, String field, Object data) {
         Client.getManagement().runAsync(() -> {
             try (Connection con = getBackend().getSource().getConnection()) {
                 try (PreparedStatement saveStmt = con.prepareStatement("UPDATE `" +
-                        getTableName() + "` JSON_REPLACE(`json`, '$." + jsonField
+                        getTableName() + "` JSON_REPLACE(`json`, '$." + field
                         + "', ?) WHERE `uuid`=?")) {
 
-                    saveStmt.setString(1, String.valueOf(data));
-                    saveStmt.setString(2, Client.getJsonModule().read("main")
-                            .toJson(account.getUniqueId().toString()));
+                    saveStmt.setString(1, Client.getJsonModule().read("main")
+                            .toJson(String.valueOf(data)));
+                    saveStmt.setString(2, account.getUniqueId().toString());
 
                     saveStmt.execute();
                 }
