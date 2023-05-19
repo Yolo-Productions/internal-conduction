@@ -120,7 +120,8 @@ public final class AccountDataImpl implements AccountData {
                         + "', ?) WHERE `uuid`=?")) {
 
                     saveStmt.setString(1, String.valueOf(data));
-                    saveStmt.setString(2, account.getUniqueId().toString());
+                    saveStmt.setString(2, Client.getJsonModule().read("main")
+                            .toJson(account.getUniqueId().toString()));
 
                     saveStmt.execute();
                 }
