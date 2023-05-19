@@ -11,6 +11,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang.RandomStringUtils;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
+
 public class Client {
 
     @Getter
@@ -47,14 +50,14 @@ public class Client {
 
         sql.openConnection(thrown -> {
             if (thrown != null) {
-                System.out.println("> Ocorreu um erro ao tentar estabelecer conexão com o MysQL.");
-                return;
+                throw new RuntimeException("> Ocorreu um erro ao tentar estabelecer conexão com o MysQL.",
+                        thrown);
             }
         });
         redis.openConnection(thrown -> {
             if (thrown != null) {
-                System.out.println("> Ocorreu um erro ao tentar estabelecer conexão com o Redis.");
-                return;
+                throw new RuntimeException("> Ocorreu um erro ao tentar estabelecer conexão com o Redis.",
+                        thrown);
             }
         });
 

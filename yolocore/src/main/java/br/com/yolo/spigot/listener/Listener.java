@@ -16,7 +16,8 @@ public class Listener {
         for (Class<?> clazz : ClassGetter.getClassesForPackageByPlugin(plugin, directory))
             if (org.bukkit.event.Listener.class.isAssignableFrom(clazz))
                 try {
-                    org.bukkit.event.Listener listener = (org.bukkit.event.Listener) clazz.newInstance();
+                    org.bukkit.event.Listener listener = (org.bukkit.event.Listener)
+                            clazz.newInstance();
 
                     Bukkit.getPluginManager().registerEvents(listener, plugin);
                     totally += 1;
