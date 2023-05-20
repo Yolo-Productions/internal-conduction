@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class AccountListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void account(AsyncPlayerPreLoginEvent event) {
+    public synchronized void account(AsyncPlayerPreLoginEvent event) {
         try {
             Account account = Client.getAccountData().loadAccount(event.getUniqueId());
 
