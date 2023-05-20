@@ -1,11 +1,14 @@
 package br.com.yolo.spigot;
 
 import br.com.yolo.core.Client;
+import br.com.yolo.core.Constant;
+import br.com.yolo.core.backend.database.redis.RedisConnection;
 import br.com.yolo.spigot.adapter.LocationAdapter;
 import br.com.yolo.spigot.api.inventory.Inventory;
 import br.com.yolo.spigot.command.impl.SpigotCommandFramework;
 import br.com.yolo.spigot.event.build.ServerTimeEvent;
 import br.com.yolo.spigot.listener.Listener;
+import br.com.yolo.spigot.networking.SpigotPubSubHandler;
 import com.google.gson.GsonBuilder;
 
 import lombok.Getter;
@@ -25,6 +28,7 @@ public abstract class SpigotMain extends JavaPlugin {
         instance = this;
     }
 
+    protected RedisConnection.PubSubListener pubSub;
     protected Map<UUID, Inventory> inventoriesInAction;
 
     @Override
@@ -41,6 +45,7 @@ public abstract class SpigotMain extends JavaPlugin {
     @Override
     public void onEnable() {
         try {
+            pubSub = new RedisConnection.PubSubListener(Client.getRedisConnection(), new SpigotPubSubHandler(), Constant.REDIS_FIELDS);
             inventoriesInAction = new LinkedHashMap<>();
 
             new Listener(this, "br.com.yolo.spigot").sendPacket();

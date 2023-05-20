@@ -18,25 +18,25 @@ public class ServerDataMessage<T> {
 
 	@Getter
 	@RequiredArgsConstructor
-	public static class start {
+	public static class Start {
 		private final Server server;
 	}
 
 	@Getter
 	@RequiredArgsConstructor
-	public static class stop {
+	public static class Stop {
 		private final ServerType server;
 	}
 
 	@Getter
 	@RequiredArgsConstructor
-	public static class join {
+	public static class Join {
 		private final UUID uniqueId;
 	}
 
 	@Getter
 	@RequiredArgsConstructor
-	public static class leave {
+	public static class Leave {
 		private final UUID uniqueId;
 	}
 

@@ -36,6 +36,10 @@ public final class Account {
                 .build();
     }
 
+    public boolean hasPermission(Group group) {
+        return rank.getGroup().ordinal() <= group.ordinal();
+    }
+
     public Player toPlayer() {
         return Client.getManagement().getPlayer(uniqueId, Player.class);
     }

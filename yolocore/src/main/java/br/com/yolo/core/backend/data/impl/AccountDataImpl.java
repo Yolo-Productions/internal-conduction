@@ -45,23 +45,27 @@ public final class AccountDataImpl implements AccountData {
     }
 
     @Override
-    public Account loadAccount(UUID uniqueId) throws Exception {
-        try (Connection con = getBackend().getSource().getConnection()) {
-            try (PreparedStatement getStmt = con.prepareStatement("SELECT * FROM `" +
-                    getTableName() + "` WHERE `uuid`=?")) {
+    public Account loadAccount(UUID uniqueId) {
+        try {
+            try (Connection con = getBackend().getSource().getConnection()) {
+                try (PreparedStatement getStmt = con.prepareStatement("SELECT * FROM `" +
+                        getTableName() + "` WHERE `uuid`=?")) {
 
-                getStmt.setString(1, uniqueId.toString());
+                    getStmt.setString(1, uniqueId.toString());
 
-                try (ResultSet resultSet = getStmt.executeQuery()) {
-                    if (resultSet.next()) {
-                        return Client.getJsonModule().read("main").fromJson(resultSet
-                                        .getString(2), Account.class);
-                    } else {
-                        return null;
+                    try (ResultSet resultSet = getStmt.executeQuery()) {
+                        if (resultSet.next())
+                            return Client.getJsonModule().read("main").fromJson(resultSet
+                                    .getString(2), Account.class);
                     }
                 }
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
         }
+
+        return null;
     }
 
     @Override

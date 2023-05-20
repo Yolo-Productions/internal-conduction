@@ -9,4 +9,6 @@ public class Constant {
             ACCOUNT_NOT_LOADED = "§cHouve um erro ao carregar sua conta.",
 
             REDIS_ACCOUNT_KEY = "account$";
+
+    public static final String[] REDIS_FIELDS = { "account-field", "server-field" };
 }
