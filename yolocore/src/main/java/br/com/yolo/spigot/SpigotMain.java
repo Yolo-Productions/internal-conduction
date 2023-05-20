@@ -4,6 +4,7 @@ import br.com.yolo.core.Client;
 import br.com.yolo.spigot.adapter.LocationAdapter;
 import br.com.yolo.spigot.api.inventory.Inventory;
 import br.com.yolo.spigot.command.impl.SpigotCommandFramework;
+import br.com.yolo.spigot.event.build.ServerTimeEvent;
 import br.com.yolo.spigot.listener.Listener;
 import com.google.gson.GsonBuilder;
 import lombok.Getter;
@@ -43,6 +44,10 @@ public abstract class SpigotMain extends JavaPlugin {
 
             new Listener(this, "br.com.yolo.spigot").sendPacket();
             new SpigotCommandFramework(this).registerAll("br.com.yolo.spigot.command.list");
+
+            getServer().getScheduler().runTaskTimerAsynchronously(this, () -> {
+                new ServerTimeEvent().call();
+            }, 20L, 20L);
         } catch (Exception ex) {
             ex.printStackTrace();
             getServer().shutdown();
