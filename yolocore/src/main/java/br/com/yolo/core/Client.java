@@ -8,6 +8,7 @@ import br.com.yolo.core.server.type.ServerType;
 import br.com.yolo.core.storage.json.JsonModule;
 import br.com.yolo.core.storage.module.AccountModule;
 
+import br.com.yolo.core.storage.module.ServerModule;
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import lombok.Getter;
@@ -40,6 +41,8 @@ public class Client {
     @Getter
     @Setter
     private static ServerDataImpl serverData;
+    @Getter
+    private static final ServerModule serverModule = new ServerModule();
 
     @Getter
     @Setter

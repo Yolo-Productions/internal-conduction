@@ -5,6 +5,7 @@ import br.com.yolo.core.server.status.ServerStatus;
 import br.com.yolo.core.server.type.ServerType;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang.RandomStringUtils;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -13,6 +14,7 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Server {
+    private final String id;
     private String name, world;
 
     private ServerType type;
@@ -22,6 +24,7 @@ public class Server {
     private int slots;
 
     public Server(ServerType type, int slots) {
+        this.id = RandomStringUtils.randomAlphanumeric(5);
         this.type = type;
         this.slots = slots;
 
