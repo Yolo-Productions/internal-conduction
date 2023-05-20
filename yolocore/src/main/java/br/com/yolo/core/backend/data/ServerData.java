@@ -1,4 +1,4 @@
-package br.com.yolo.core.backend.data.server;
+package br.com.yolo.core.backend.data;
 
 import br.com.yolo.core.backend.database.redis.RedisConnection;
 import br.com.yolo.core.server.Server;

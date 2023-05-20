@@ -1,25 +1,33 @@
-package br.com.yolo.core.backend.data.account.impl;
+package br.com.yolo.core.backend.data.impl;
 
 import br.com.yolo.core.Client;
+import br.com.yolo.core.Constant;
 import br.com.yolo.core.account.Account;
-import br.com.yolo.core.backend.data.account.AccountData;
+import br.com.yolo.core.backend.data.AccountData;
 import br.com.yolo.core.backend.database.mysql.MySQLConnection;
-import br.com.yolo.core.util.resolver.field.FieldResolver;
+import br.com.yolo.core.backend.database.redis.RedisConnection;
+import com.google.gson.JsonObject;
 import lombok.Getter;
+import redis.clients.jedis.Jedis;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Getter
 public final class AccountDataImpl implements AccountData {
 
     private final MySQLConnection backend;
+    private final RedisConnection redis;
 
-    public AccountDataImpl(MySQLConnection backend) {
+    public AccountDataImpl(MySQLConnection backend, RedisConnection redis) {
         this.backend = backend;
+        this.redis = redis;
+
         try {
             try (Connection con = getBackend().getSource().getConnection();
                  Statement createStmt = con.createStatement()) {
@@ -69,6 +77,15 @@ public final class AccountDataImpl implements AccountData {
                         .toJson(account));
 
                 insertStmt.execute();
+
+                try (Jedis jedis = redis.getPool().getResource()) {
+                    Map<String, String> mapToInsert = new HashMap<>();
+
+                    JsonObject object = (JsonObject) Client.GSON.toJsonTree(account);
+                    object.entrySet().forEach(entry -> mapToInsert.put(entry.getKey(), Client.GSON.toJson(entry.getValue())));
+
+                    jedis.hmset(Constant.REDIS_ACCOUNT_KEY + uniqueId.toString(), mapToInsert);
+                }
 
                 return account;
             }

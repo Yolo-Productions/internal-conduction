@@ -1,4 +1,4 @@
-package br.com.yolo.core.backend.data.account;
+package br.com.yolo.core.backend.data;
 
 import br.com.yolo.core.account.Account;
 

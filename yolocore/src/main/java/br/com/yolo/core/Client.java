@@ -1,18 +1,22 @@
 package br.com.yolo.core;
 
-import br.com.yolo.core.backend.data.account.impl.AccountDataImpl;
-import br.com.yolo.core.backend.data.server.impl.ServerDataImpl;
+import br.com.yolo.core.backend.data.impl.AccountDataImpl;
+import br.com.yolo.core.backend.data.impl.ServerDataImpl;
 import br.com.yolo.core.backend.database.mysql.MySQLConnection;
 import br.com.yolo.core.backend.database.redis.RedisConnection;
 import br.com.yolo.core.server.type.ServerType;
 import br.com.yolo.core.storage.json.JsonModule;
 import br.com.yolo.core.storage.module.AccountModule;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang.RandomStringUtils;
 
 public class Client {
+    public static final Gson GSON = new Gson();
+    public static final JsonParser PARSER = new JsonParser();
 
     @Getter
     @Setter
@@ -68,5 +72,6 @@ public class Client {
         setManagement(newManagement);
 
         setServerData(new ServerDataImpl(redisConnection));
+        setAccountData(new AccountDataImpl(mySQLConnection, redisConnection));
     }
 }

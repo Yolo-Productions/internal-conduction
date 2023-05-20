@@ -1,6 +1,6 @@
-package br.com.yolo.core.backend.data.server.impl;
+package br.com.yolo.core.backend.data.impl;
 
-import br.com.yolo.core.backend.data.server.ServerData;
+import br.com.yolo.core.backend.data.ServerData;
 import br.com.yolo.core.backend.database.redis.RedisConnection;
 import br.com.yolo.core.server.Server;
 import br.com.yolo.core.server.type.ServerType;
