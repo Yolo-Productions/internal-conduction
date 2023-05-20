@@ -1,4 +1,4 @@
-package br.com.yolo.core.account.setting;
+package br.com.yolo.core.account.connection.setting;
 
 public enum SettingTag {
 

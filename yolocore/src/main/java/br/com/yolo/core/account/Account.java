@@ -1,9 +1,11 @@
 package br.com.yolo.core.account;
 
 import br.com.yolo.core.Client;
-import br.com.yolo.core.account.datahandler.DataHandler;
-import br.com.yolo.core.account.setting.SettingTag;
-import br.com.yolo.core.account.statistic.StatisticTag;
+import br.com.yolo.core.account.connection.datahandler.DataHandler;
+import br.com.yolo.core.account.connection.setting.SettingTag;
+import br.com.yolo.core.account.connection.statistic.StatisticTag;
+import br.com.yolo.core.account.other.rank.RankConstructor;
+import br.com.yolo.core.account.other.rank.type.Group;
 import br.com.yolo.core.util.resolver.field.FieldResolver;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -19,11 +21,19 @@ public final class Account {
     private final String name;
     private final DataHandler dataHandler;
 
+    private RankConstructor rank;
+
     public Account(UUID uniqueId, String name) {
         this.uniqueId = uniqueId;
         this.name = name;
 
         dataHandler = new DataHandler(uniqueId);
+        rank = RankConstructor.builder()
+                .group(Group.UNKNOWN)
+                .author("Sistema")
+                .attributedIn(System.currentTimeMillis())
+                .expireIn(-1L)
+                .build();
     }
 
     public Player toPlayer() {

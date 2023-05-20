@@ -1,4 +1,4 @@
-package br.com.yolo.core.account.setting;
+package br.com.yolo.core.account.connection.setting;
 
 import br.com.yolo.core.util.json.AbstractJsonObject;
 

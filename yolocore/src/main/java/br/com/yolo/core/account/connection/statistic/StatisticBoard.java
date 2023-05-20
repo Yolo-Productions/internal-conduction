@@ -1,6 +1,6 @@
-package br.com.yolo.core.account.statistic;
+package br.com.yolo.core.account.connection.statistic;
 
-import br.com.yolo.core.account.datahandler.DataHandler;
+import br.com.yolo.core.account.connection.datahandler.DataHandler;
 
 import java.util.Map;
 
